@@ -1,0 +1,17 @@
+<template>
+  <require from="bootstrap/css/bootstrap.css"></require>
+  <require from="./shared/headerView"></require>
+  <require from="./shared/footerView"></require>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <header-view></header-view>
+    </div>
+  </div>
+  <router-view></router-view>
+  <div class="row">
+    <div class="col-sm-12">
+      <footer-view></footer-view>
+    </div>
+  </div>
+</template>
