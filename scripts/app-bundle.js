@@ -25,12 +25,13 @@ define('app',['exports'], function (exports) {
     return App;
   }();
 });
-define('default',['exports'], function (exports) {
+define('default',['exports', 'aurelia-framework', './monsters/services/api'], function (exports, _aureliaFramework, _api) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
+    exports.Default = undefined;
 
     function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
@@ -38,11 +39,22 @@ define('default',['exports'], function (exports) {
         }
     }
 
-    var Default = exports.Default = function Default() {
-        _classCallCheck(this, Default);
+    var _dec, _class;
 
-        this.test = 'TEST!';
-    };
+    var Default = exports.Default = (_dec = (0, _aureliaFramework.inject)(_api.Api), _dec(_class = function () {
+        function Default(api) {
+            _classCallCheck(this, Default);
+
+            this.api = api;
+            this.test = 'TEST!';
+        }
+
+        Default.prototype.activate = function activate() {
+            this.api.getMonsters({ adventure: 'Prince_of_the_Apoclaypse' });
+        };
+
+        return Default;
+    }()) || _class);
 });
 define('environment',["exports"], function (exports) {
   "use strict";
@@ -139,6 +151,45 @@ define('shared/headerView',['exports'], function (exports) {
 
         this.header = 'HEADER HERE!';
     };
+});
+define('monsters/services/api',['exports', 'aurelia-framework', 'aurelia-http-client'], function (exports, _aureliaFramework, _aureliaHttpClient) {
+    'use strict';
+
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+    exports.Api = undefined;
+
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
+        }
+    }
+
+    var _dec, _class;
+
+    var Api = exports.Api = (_dec = (0, _aureliaFramework.inject)(_aureliaHttpClient.HttpClient), (0, _aureliaFramework.noView)(_class = _dec(_class = function () {
+        function Api(httpClient) {
+            _classCallCheck(this, Api);
+
+            this.httpClient = httpClient;
+            this.httpClient.configure(function (config) {
+                config.withHeader('Content-Type', 'application/json');
+            });
+        }
+
+        Api.prototype.getMonsters = function getMonsters(queryParams) {
+            if (!queryParams) {
+                queryParams.adventure = 'Prince_of_the_Apoclaypse';
+            }
+            this.httpClient.get('/resources/json/' + queryParams.adventure + '.json').then(function (response) {
+                console.log(JSON.parse(response));
+                return JSON.parse(response);
+            });
+        };
+
+        return Api;
+    }()) || _class) || _class);
 });
 define('text!app.html', ['module'], function(module) { module.exports = "<template><require from=\"bootstrap/css/bootstrap.css\"></require><require from=\"./shared/headerView\"></require><require from=\"./shared/footerView\"></require><div class=\"row\"><div class=\"col-sm-12\"><header-view></header-view></div></div><router-view></router-view><div class=\"row\"><div class=\"col-sm-12\"><footer-view></footer-view></div></div></template>"; });
 define('text!default.html', ['module'], function(module) { module.exports = "<template>${test}</template>"; });
