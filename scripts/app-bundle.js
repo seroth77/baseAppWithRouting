@@ -141,7 +141,7 @@ define('shared/headerView',['exports'], function (exports) {
     };
 });
 define('text!app.html', ['module'], function(module) { module.exports = "<template><require from=\"bootstrap/css/bootstrap.css\"></require><require from=\"./shared/headerView\"></require><require from=\"./shared/footerView\"></require><div class=\"row\"><div class=\"col-sm-12\"><header-view></header-view></div></div><router-view></router-view><div class=\"row\"><div class=\"col-sm-12\"><footer-view></footer-view></div></div></template>"; });
-define('text!shared/default.html', ['module'], function(module) { module.exports = "<template>${test}</template>"; });
+define('text!default.html', ['module'], function(module) { module.exports = "<template>${test}</template>"; });
 define('text!shared/footerView.html', ['module'], function(module) { module.exports = "<template>${footer}</template>"; });
 define('text!shared/headerView.html', ['module'], function(module) { module.exports = "<template>${header}</template>"; });
 //# sourceMappingURL=app-bundle.js.map
